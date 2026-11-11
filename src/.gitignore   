@@ -1,0 +1,14 @@
+# Файлы сборки (бинарники)
+src/cat/s21_cat
+src/grep/s21_grep
+*.o
+*.a
+
+# Дампы виртуальных машин
+*.iso
+*.utm
+*.qcow2
+*.tar
+
+# Системный мусор macOS
+.DS_Store
