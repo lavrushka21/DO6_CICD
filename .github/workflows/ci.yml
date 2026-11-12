@@ -1,0 +1,25 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ develop ]
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          echo "Начинаем сборку..."
+          cd code-samples && make
+          echo "Сборка завершена успешно!"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: DO-binary
+          path: code-samples/DO
+          retention-days: 30
