@@ -23,3 +23,17 @@ jobs:
           name: DO-binary
           path: code-samples/DO
           retention-days: 30
+
+  style:
+    runs-on: self-hosted
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check code style
+        run: |
+          echo "Проверяем кодстайл..."
+          cd code-samples
+          clang-format -n --Werror *.c *.h
+          echo "Кодстайл в порядке!"
