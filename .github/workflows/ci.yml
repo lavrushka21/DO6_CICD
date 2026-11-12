@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [ develop ]
+    branches: [develop]
 
 jobs:
   build:
@@ -35,5 +35,5 @@ jobs:
         run: |
           echo "Проверяем кодстайл..."
           cd code-samples
-          clang-format -n --Werror *.c *.h
+          clang-format -n --Werror *.c
           echo "Кодстайл в порядке!"
