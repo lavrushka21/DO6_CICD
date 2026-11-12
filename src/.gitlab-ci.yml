@@ -1,0 +1,13 @@
+stages:
+  - build
+
+build-job:
+  stage: build
+  script:
+    - echo "Начинаем сборку..."
+    - cd code-samples && make
+    - echo "Сборка завершена успешно!"
+  artifacts:
+    paths:
+      - code-samples/DO
+    expire_in: 30 days
