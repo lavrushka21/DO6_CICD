@@ -51,3 +51,16 @@ jobs:
           make
           chmod +x ../src/tests/test.sh
           bash ../src/tests/test.sh
+
+  deploy:
+    runs-on: self-hosted
+    needs: [build, style, integration]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: cd code-samples && make
+
+      - name: Deploy
+        run: bash deploy.sh
