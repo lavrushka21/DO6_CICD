@@ -37,3 +37,17 @@ jobs:
           cd code-samples
           clang-format -n --Werror *.c
           echo "Кодстайл в порядке!"
+
+  integration:
+    runs-on: self-hosted
+    needs: [build, style]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run integration tests
+        run: |
+          cd code-samples
+          make
+          chmod +x ../src/tests/test.sh
+          bash ../src/tests/test.sh
