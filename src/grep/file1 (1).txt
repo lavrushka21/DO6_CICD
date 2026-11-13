@@ -1,0 +1,31 @@
+
+
+Application started successfully at 2024-04-05 10:30:00
+User requested access to the database [ID: 1001]
+Error: Connection timeout occurred after 5 seconds
+Database connection established at 192.168.1.100:5432
+Invalid login attempt detected from 192.168.1.50
+Processing data in batch mode (batch ID: 7)
+Warning: Memory usage high (98% of 4GB RAM used)
+Finalizing operation #99
+database error
+
+
+Test
+
+
+
+
+
+Application started successfully at 2024-04-05 10:30:00
+User requested access to the database [ID: 1001]
+Error: Connection timeout occurred after 5 seconds
+Database connection established at 192.168.1.100:5432
+Invalid login attempt detected from 192.168.1.50
+Processing data in batch mode (batch ID: 7)
+Warning: Memory usage high (98% of 4GB RAM used)
+Finalizing operation #99
+database error
+
+
+Test

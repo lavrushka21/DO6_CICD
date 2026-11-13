@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 
 on:
   push:
-    branches: [develop]
+    branches: [ develop ]
 
 jobs:
   build:
@@ -11,17 +11,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build
+      - name: Build cat and grep
         run: |
           echo "Начинаем сборку..."
-          cd code-samples && make
+          cd src/cat && make
+          cd ../grep && make
           echo "Сборка завершена успешно!"
 
-      - name: Upload artifact
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: DO-binary
-          path: code-samples/DO
+          name: binaries
+          path: |
+            src/cat/s21_cat
+            src/grep/s21_grep
           retention-days: 30
 
   style:
@@ -34,8 +37,8 @@ jobs:
       - name: Check code style
         run: |
           echo "Проверяем кодстайл..."
-          cd code-samples
-          clang-format -n --Werror *.c
+          cd src/cat && clang-format -n --Werror *.c *.h
+          cd ../grep && clang-format -n --Werror *.c *.h
           echo "Кодстайл в порядке!"
 
   integration:
@@ -47,10 +50,11 @@ jobs:
 
       - name: Run integration tests
         run: |
-          cd code-samples
-          make
-          chmod +x ../src/tests/test.sh
-          bash ../src/tests/test.sh
+          cd src/cat && make
+          cd ../grep && make
+          cd ../..
+          bash src/tests/test_cat.sh
+          bash src/tests/test_grep.sh
 
   deploy:
     runs-on: self-hosted
@@ -60,7 +64,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build
-        run: cd code-samples && make
+        run: |
+          cd src/cat && make
+          cd ../grep && make
 
       - name: Deploy
         run: bash deploy.sh
