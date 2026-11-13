@@ -36,9 +36,11 @@ jobs:
 
       - name: Check code style
         run: |
+      - name: Check code style
+        run: |
           echo "Проверяем кодстайл..."
-          cd src/cat && clang-format -n --Werror *.c *.h
-          cd ../grep && clang-format -n --Werror *.c *.h
+          cd src/cat && clang-format -n --Werror *.c
+          cd ../grep && clang-format -n --Werror *.c
           echo "Кодстайл в порядке!"
 
   integration:

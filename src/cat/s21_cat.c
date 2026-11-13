@@ -19,25 +19,25 @@ struct option long_options[] = {{"number-nonblank", 0, 0, 'b'},
                                 {"squeeze-blank", 0, 0, 's'},
                                 {0, 0, 0, 0}};
 
-void cat(int argc, char *argv[]);
-void openFile(char *filename, Options *flags);
-void parserFlags(FILE *file, Options *flags);
-void ReadFlags(int argc, char *argv[], Options *flags, int *stop_cat);
-void operation_b(int symbol, int *str_count, int *prev_char);
+void cat(int argc, char* argv[]);
+void openFile(char* filename, Options* flags);
+void parserFlags(FILE* file, Options* flags);
+void ReadFlags(int argc, char* argv[], Options* flags, int* stop_cat);
+void operation_b(int symbol, int* str_count, int* prev_char);
 void operation_E(int symbol);
 void operation_e(int symbol);
-void operation_n(int symbol, int *str_count, int *numb_count);
-void operation_s(int symbol, int *last_symbol, int *empty_line);
+void operation_n(int symbol, int* str_count, int* numb_count);
+void operation_s(int symbol, int* last_symbol, int* empty_line);
 void operation_t(int symbol);
 void operation_T(int symbol);
 void operation_v(int symbol);
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   cat(argc, argv);
   return 0;
 }
 
-void cat(int argc, char *argv[]) {
+void cat(int argc, char* argv[]) {
   Options flags = {0};
   int stop_cat = 0;
   ReadFlags(argc, argv, &flags, &stop_cat);
@@ -49,8 +49,8 @@ void cat(int argc, char *argv[]) {
   }
 }
 
-void openFile(char *filename, Options *flags) {
-  FILE *file = fopen(filename, "rt");
+void openFile(char* filename, Options* flags) {
+  FILE* file = fopen(filename, "rt");
   if (file != NULL) {
     parserFlags(file, flags);
     fclose(file);
@@ -59,7 +59,7 @@ void openFile(char *filename, Options *flags) {
   }
 }
 
-void ReadFlags(int argc, char *argv[], Options *flags, int *stop_cat) {
+void ReadFlags(int argc, char* argv[], Options* flags, int* stop_cat) {
   int res;
   while ((res = getopt_long(argc, argv, "benstETv", long_options, NULL)) !=
          -1) {
@@ -96,7 +96,7 @@ void ReadFlags(int argc, char *argv[], Options *flags, int *stop_cat) {
   }
 }
 
-void parserFlags(FILE *file, Options *flags) {
+void parserFlags(FILE* file, Options* flags) {
   int symbol;
   int str_count = 1;
   int numb_count = 0;
@@ -130,7 +130,7 @@ void parserFlags(FILE *file, Options *flags) {
   }
 }
 
-void operation_b(int symbol, int *str_count, int *prev_char) {
+void operation_b(int symbol, int* str_count, int* prev_char) {
   if (*prev_char == '\n' && symbol != '\n') {
     printf("%6d\t", (*str_count)++);
   }
@@ -145,7 +145,7 @@ void operation_E(int symbol) {
   putchar(symbol);
 }
 
-void operation_n(int symbol, int *str_count, int *numb_count) {
+void operation_n(int symbol, int* str_count, int* numb_count) {
   if (*numb_count < *str_count) {
     printf("%6d\t", *str_count);
     (*numb_count)++;
@@ -156,7 +156,7 @@ void operation_n(int symbol, int *str_count, int *numb_count) {
   }
 }
 
-void operation_s(int symbol, int *last_symbol, int *empty_line) {
+void operation_s(int symbol, int* last_symbol, int* empty_line) {
   if (*last_symbol == '\n' && symbol == '\n') {
     (*empty_line)++;
     if (*empty_line == 1) {

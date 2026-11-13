@@ -14,29 +14,29 @@ typedef struct {
   int c;
   int l;
   int n;
-  char *patterns[MAX_PATTERNS];
+  char* patterns[MAX_PATTERNS];
   int pattern_count;
 } Options;
 
-void grep(int argc, char *argv[]);
-void readFlags(int argc, char *argv[], Options *flags, int *stop_grep);
-void openFile(char *filename, Options *flags, int *stop_grep, int count_files);
-void processingFile(FILE *file, Options *flags, char *filename, int *stop_grep,
+void grep(int argc, char* argv[]);
+void readFlags(int argc, char* argv[], Options* flags, int* stop_grep);
+void openFile(char* filename, Options* flags, int* stop_grep, int count_files);
+void processingFile(FILE* file, Options* flags, char* filename, int* stop_grep,
                     int count_files);
-void parserFlags(FILE *file, Options *flags, regex_t *regex, char *filename,
+void parserFlags(FILE* file, Options* flags, regex_t* regex, char* filename,
                  int count_files);
-void basicOutput(FILE *file, regex_t *regex, char *filename, int count_files);
-void operation_v(FILE *file, regex_t *regex, char *filename, int count_files);
-void operation_c(FILE *file, regex_t *regex, char *filename, int count_files);
-void operation_l(regex_t *regex, char *filename, FILE *file);
-void operation_n(FILE *file, regex_t *regex, char *filename, int count_files);
+void basicOutput(FILE* file, regex_t* regex, char* filename, int count_files);
+void operation_v(FILE* file, regex_t* regex, char* filename, int count_files);
+void operation_c(FILE* file, regex_t* regex, char* filename, int count_files);
+void operation_l(regex_t* regex, char* filename, FILE* file);
+void operation_n(FILE* file, regex_t* regex, char* filename, int count_files);
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
   grep(argc, argv);
   return 0;
 }
 
-void grep(int argc, char *argv[]) {
+void grep(int argc, char* argv[]) {
   Options flags = {0};
   int stop_grep = 0;
   readFlags(argc, argv, &flags, &stop_grep);
@@ -50,7 +50,7 @@ void grep(int argc, char *argv[]) {
   }
 }
 
-void readFlags(int argc, char *argv[], Options *flags, int *stop_grep) {
+void readFlags(int argc, char* argv[], Options* flags, int* stop_grep) {
   int rez;
   while ((rez = getopt(argc, argv, "e:ivcln")) != -1) {
     switch (rez) {
@@ -91,8 +91,8 @@ void readFlags(int argc, char *argv[], Options *flags, int *stop_grep) {
   }
 }
 
-void openFile(char *filename, Options *flags, int *stop_grep, int count_files) {
-  FILE *file = fopen(filename, "r");
+void openFile(char* filename, Options* flags, int* stop_grep, int count_files) {
+  FILE* file = fopen(filename, "r");
   if (file != NULL) {
     static int file_index = 0;
     file_index++;
@@ -104,7 +104,7 @@ void openFile(char *filename, Options *flags, int *stop_grep, int count_files) {
   }
 }
 
-void processingFile(FILE *file, Options *flags, char *filename, int *stop_grep,
+void processingFile(FILE* file, Options* flags, char* filename, int* stop_grep,
                     int count_files) {
   regex_t regex;
   int compiled_flags = flags->i ? REG_ICASE : 0;
@@ -120,7 +120,7 @@ void processingFile(FILE *file, Options *flags, char *filename, int *stop_grep,
   regfree(&regex);
 }
 
-void parserFlags(FILE *file, Options *flags, regex_t *regex, char *filename,
+void parserFlags(FILE* file, Options* flags, regex_t* regex, char* filename,
                  int count_files) {
   if (flags->l) {
     operation_l(regex, filename, file);
@@ -135,7 +135,7 @@ void parserFlags(FILE *file, Options *flags, regex_t *regex, char *filename,
   }
 }
 
-void basicOutput(FILE *file, regex_t *regex, char *filename, int count_files) {
+void basicOutput(FILE* file, regex_t* regex, char* filename, int count_files) {
   char line[BUFFER_SIZE];
   rewind(file);
   while (fgets(line, BUFFER_SIZE, file)) {
@@ -149,7 +149,7 @@ void basicOutput(FILE *file, regex_t *regex, char *filename, int count_files) {
   }
 }
 
-void operation_v(FILE *file, regex_t *regex, char *filename, int count_files) {
+void operation_v(FILE* file, regex_t* regex, char* filename, int count_files) {
   char line[BUFFER_SIZE];
   while (fgets(line, BUFFER_SIZE, file)) {
     if (regexec(regex, line, 0, 0, 0) != 0) {
@@ -163,7 +163,7 @@ void operation_v(FILE *file, regex_t *regex, char *filename, int count_files) {
   }
 }
 
-void operation_c(FILE *file, regex_t *regex, char *filename, int count_files) {
+void operation_c(FILE* file, regex_t* regex, char* filename, int count_files) {
   char line[BUFFER_SIZE];
   int count_same = 0;
   while (fgets(line, BUFFER_SIZE, file)) {
@@ -178,7 +178,7 @@ void operation_c(FILE *file, regex_t *regex, char *filename, int count_files) {
   }
 }
 
-void operation_l(regex_t *regex, char *filename, FILE *file) {
+void operation_l(regex_t* regex, char* filename, FILE* file) {
   int index_found = 0;
   char line[BUFFER_SIZE];
   rewind(file);
@@ -192,7 +192,7 @@ void operation_l(regex_t *regex, char *filename, FILE *file) {
   }
 }
 
-void operation_n(FILE *file, regex_t *regex, char *filename, int count_files) {
+void operation_n(FILE* file, regex_t* regex, char* filename, int count_files) {
   char line[BUFFER_SIZE];
   int count_line = 1;
   rewind(file);
